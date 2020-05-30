@@ -3,7 +3,6 @@ const multer = require('multer')
 const uploadConfig = require('./config/upload');
 const routes = express.Router();
 
-//const LoginController = require('./middleware/AuthController');
 const upload = multer(uploadConfig);
 
 const SessionController = require('./controllers/SessionController');
@@ -23,7 +22,7 @@ routes.post('/sessions', SessionController.store);
 
 //Post
 routes.get('/posts', PostController.index);
-routes.post('/posts', upload.single('image'), PostController.store);
+routes.post('/posts', upload.single('file'), PostController.store);
 routes.delete('/posts/:id', PostController.destroy);
 //Likes
 routes.post('/posts/:postId/like', LikeController.store);

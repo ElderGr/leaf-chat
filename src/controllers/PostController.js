@@ -1,5 +1,8 @@
-const database = require('../services/firebase');
+//models
 const Post = require('../models/Post')
+const User = require('../models/User')
+
+const database = require('../services/firebase');
 const sharp = require('sharp');
 const path = require('path');
 const fs = require('fs');
@@ -37,42 +40,35 @@ module.exports = {
 
   async store(req, res) {
 
-    let src;
+    try{
+      let src;
+  
+      if (req.file !== undefined) {
+        const { filename: image } = req.file;
+        src = image;
+      }
+  
+      const { owner, content } = req.body;
+  
+      const userExists = await User.findOne({ _id: owner });
+      console.log(userExists)
 
-    if (req.file !== undefined) {
-      const { filename: image } = req.file;
-      src = image;
-    }
-
-    var newPost;
-    const { owner, content } = JSON.parse(req.body.content);
-
-    // await sharp(req.file.path)
-    //   .resize(500)
-    //   .jpeg({ quality: 70 })
-    //   .toFile(
-    //     path.resolve(req.file.destination, 'resized', src)
-    //   )
-
-    try {
-      var newPost = await database.ref('Post').push({
+      if(!userExists) throw "User not found!";
+  
+      const newPost = await Post.create({
         owner,
         content,
-        likes: {},
-        coments: {},
-        image: req.file !== undefined ? `http://localhost:5000/files/${src}` : '',
-        timestamp: new Date().getTime()
-      }, function (err) {
-        if (err) {
-          res.send(err);
-        } else {
-          res.json({ newPost });
-        }
+        comments: [],
+        files: [req.file !== undefined ? `http://localhost:5000/files/${src}` : '']
       })
-    } catch (err) {
-      return res.json({ err })
+  
+      return res.json(newPost);
+    }catch(err){
+      return res.status(400).json({ err })
     }
   },
+
+  
   async destroy(req, res){
     const {id} = req.params;
 
