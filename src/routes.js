@@ -33,7 +33,7 @@ routes.post('/posts/:postId/comment', CommentsController.store);
 routes.get('/users', UserController.index);
 routes.get('/users/:uid', UserController.show);
 routes.post('/users', upload.single('profileImage'), UserController.store);
-routes.put('/users/:uid/', UserController.update);
+routes.put('/users/:uid/', upload.single('profileImage'), UserController.update);
 routes.delete('/users/:uid', UserController.destroy);
 
 //chats
