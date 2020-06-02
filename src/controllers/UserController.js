@@ -1,11 +1,5 @@
 const User = require('../models/User');
 
-const jwt = require('jsonwebtoken')
-const { isEmpty } = require('../functions/validate');
-
-//old
-const database = require('../services/firebase');
-
 module.exports = {
 
     async index(req, res) {

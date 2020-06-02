@@ -5,7 +5,7 @@ const routes = express.Router();
 
 const upload = multer(uploadConfig);
 
-const SessionController = require('./controllers/SessionController');
+const LoginController = require('./controllers/LoginController');
 const UserController = require('./controllers/UserController');
 
 const ChatController = require('./controllers/ChatController');
@@ -17,8 +17,7 @@ const fs = require('fs');
 const database = require('./services/firebase')
 
 //login
-routes.get('/sessions', SessionController.index);
-routes.post('/sessions', SessionController.store);
+routes.post('/login', LoginController.login);
 
 //Post
 routes.get('/posts', PostController.index);

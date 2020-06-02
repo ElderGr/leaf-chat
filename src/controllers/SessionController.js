@@ -1,31 +1,31 @@
-const database = require('../services/firebase');
-const User = require('../models/User'); 
+// const database = require('../services/firebase');
+// const User = require('../models/User'); 
 
 
-module.exports = {
+// module.exports = {
 
-  async index(req, res) {
-    try {
-      const users = await database.ref('User').once('value');
+//   async index(req, res) {
+//     try {
+//       const users = await database.ref('User').once('value');
     
-      return res.json({ users: users })
+//       return res.json({ users: users })
 
-    } catch(e) {
+//     } catch(e) {
 
-        return res.status(400).json({ error: e });
-    }
-  },
+//         return res.status(400).json({ error: e });
+//     }
+//   },
 
-  async store(req, res) {
-      let newSession = req.body;
+//   async store(req, res) {
+//       let newSession = req.body;
 
-      try{
-        await database.ref('User').push(newSession)
+//       try{
+//         await database.ref('User').push(newSession)
 
-        return res.json({ok: 'ok'})
+//         return res.json({ok: 'ok'})
 
-      }catch(err){
-        return res.json({err})
-      }
-  }
-}
+//       }catch(err){
+//         return res.json({err})
+//       }
+//   }
+// }
